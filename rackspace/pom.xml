@@ -29,6 +29,16 @@
     <jclouds.version>1.7.3</jclouds.version>
   </properties>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.2.1</version>
+      </plugin>
+    </plugins>
+  </build>
+
   <dependencies>
     <!-- jclouds dependencies -->
     <dependency>

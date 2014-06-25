@@ -1,0 +1,12 @@
+#!/bin/bash
+CHALLENGE_FILE=$1
+echo CHALLENGE_FILE: $CHALLENGE_FILE
+
+CHALLENGE=`basename $CHALLENGE_FILE .java`
+CLASS=`echo $CHALLENGE_FILE | sed 's#./src/main/java/##'`
+CLASS=`echo $CLASS | sed 's#/#.#g'`
+CLASS=`basename $CLASS .java`
+echo CLASS: $CLASS
+
+mvn -q compile
+mvn -q -e exec:java -Dexec.mainClass=$CLASS -Dexec.args="$RAX_USERNAME $RAX_API_KEY"

@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -40,14 +40,14 @@ import static org.jclouds.examples.rackspace.cloudservers.Constants.*;
 
 /**
  * This example creates an Ubuntu 12.04 server with 1024 MB of RAM on the Rackspace Cloud.
- *  
+ *
  */
 public class CreateServer implements Closeable {
    private final ComputeService computeService;
 
    /**
     * To get a username and API key see http://www.jclouds.org/documentation/quickstart/rackspace/
-    * 
+    *
     * The first argument (args[0]) must be your username
     * The second argument (args[1]) must be your API key
     */
@@ -71,8 +71,10 @@ public class CreateServer implements Closeable {
       overrides.setProperty(POLL_INITIAL_PERIOD, POLL_PERIOD_TWENTY_SECONDS);
       overrides.setProperty(POLL_MAX_PERIOD, POLL_PERIOD_TWENTY_SECONDS);
 
+      String endpoint = System.getenv("OS_AUTH_URL") + "/v2.0/";
       ComputeServiceContext context = ContextBuilder.newBuilder(PROVIDER)
             .credentials(username, apiKey)
+            .endpoint(endpoint)
             .overrides(overrides)
             .buildView(ComputeServiceContext.class);
       computeService = context.getComputeService();
@@ -82,7 +84,7 @@ public class CreateServer implements Closeable {
     * Create a server based on a Template. This method uses Template.fromHardware() and Template.fromImage() to
     * also demonstrate iterating through Hardware and Images. Alternatively you do the same without iterating
     * using the following Template.
-    * 
+    *
     * Template template = computeService.templateBuilder()
     *     .locationId(getLocationId())
     *     .osFamily(OsFamily.UBUNTU)
@@ -114,7 +116,7 @@ public class CreateServer implements Closeable {
 
    /**
     * This method uses the generic ComputeService.listHardwareProfiles() to find the hardware profile.
-    * 
+    *
     * @return The Hardware with 1024 MB of RAM
     */
    private Hardware getHardware() {
@@ -140,8 +142,8 @@ public class CreateServer implements Closeable {
 
    /**
     * This method uses the generic ComputeService.listImages() to find the image.
-    * 
-    * @return An Ubuntu 12.04 Image 
+    *
+    * @return An Ubuntu 12.04 Image
     */
    private Image getImage() {
       System.out.format("  Images%n");
