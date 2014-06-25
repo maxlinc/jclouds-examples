@@ -37,6 +37,7 @@ import java.util.concurrent.TimeoutException;
 import static org.jclouds.compute.config.ComputeServiceProperties.POLL_INITIAL_PERIOD;
 import static org.jclouds.compute.config.ComputeServiceProperties.POLL_MAX_PERIOD;
 import static org.jclouds.examples.rackspace.cloudservers.Constants.*;
+import static org.jclouds.examples.rackspace.Constants.*;
 
 /**
  * This example creates an Ubuntu 12.04 server with 1024 MB of RAM on the Rackspace Cloud.
@@ -71,10 +72,9 @@ public class CreateServer implements Closeable {
       overrides.setProperty(POLL_INITIAL_PERIOD, POLL_PERIOD_TWENTY_SECONDS);
       overrides.setProperty(POLL_MAX_PERIOD, POLL_PERIOD_TWENTY_SECONDS);
 
-      String endpoint = System.getenv("OS_AUTH_URL") + "/v2.0/";
       ComputeServiceContext context = ContextBuilder.newBuilder(PROVIDER)
             .credentials(username, apiKey)
-            .endpoint(endpoint)
+            .endpoint(ENDPOINT)
             .overrides(overrides)
             .buildView(ComputeServiceContext.class);
       computeService = context.getComputeService();

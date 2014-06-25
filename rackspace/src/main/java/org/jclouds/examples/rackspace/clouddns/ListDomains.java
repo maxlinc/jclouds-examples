@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -28,17 +28,18 @@ import java.io.Closeable;
 import java.io.IOException;
 
 import static org.jclouds.examples.rackspace.clouddns.Constants.*;
+import static org.jclouds.examples.rackspace.Constants.*;
 
 /**
- * This example lists domains. 
- *  
+ * This example lists domains.
+ *
  */
 public class ListDomains implements Closeable {
    private final CloudDNSApi dnsApi;
 
    /**
     * To get a username and API key see http://www.jclouds.org/documentation/quickstart/rackspace/
-    * 
+    *
     * The first argument (args[0]) must be your username
     * The second argument (args[1]) must be your API key
     */
@@ -61,6 +62,7 @@ public class ListDomains implements Closeable {
    public ListDomains(String username, String apiKey) {
       dnsApi = ContextBuilder.newBuilder(PROVIDER)
             .credentials(username, apiKey)
+            .endpoint(ENDPOINT)
             .buildApi(CloudDNSApi.class);
    }
 
@@ -69,10 +71,10 @@ public class ListDomains implements Closeable {
 
       Iterable<Domain> domains = dnsApi.getDomainApi().list().concat();
       int domainId = 0;
-      
+
       for (Domain domain: domains) {
          System.out.format("  %s%n", domain);
-         
+
          if (domain.getName().equals(NAME)) {
             domainId = domain.getId();
          }
@@ -83,9 +85,9 @@ public class ListDomains implements Closeable {
 
    private void listWithFilterByNamesMatching() {
       System.out.format("List With Filter By Names Matching%n");
-      
+
       Iterable<Domain> domains = dnsApi.getDomainApi().listWithFilterByNamesMatching(ALT_NAME).concat();
-      
+
       for (Domain domain: domains) {
          System.out.format("  %s%n", domain);
       }
@@ -95,7 +97,7 @@ public class ListDomains implements Closeable {
       System.out.format("List Subdomains%n");
 
       Iterable<Subdomain> subdomains = dnsApi.getDomainApi().listSubdomains(domainId).concat();
-      
+
       for (Subdomain subdomain: subdomains) {
          System.out.format("  %s%n", subdomain);
       }
@@ -103,8 +105,8 @@ public class ListDomains implements Closeable {
 
    /**
     * Always close your service when you're done with it.
-    * 
-    * Note that closing quietly like this is not necessary in Java 7. 
+    *
+    * Note that closing quietly like this is not necessary in Java 7.
     * You would use try-with-resources in the main method instead.
     */
    public void close() throws IOException {

@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -32,6 +32,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+import static org.jclouds.examples.rackspace.Constants.*;
 import static org.jclouds.examples.rackspace.cloudblockstorage.Constants.*;
 
 /**
@@ -67,6 +68,7 @@ public class CreateSnapshot implements Closeable {
    public CreateSnapshot(String username, String apiKey) {
        cinderApi = ContextBuilder.newBuilder(PROVIDER)
                .credentials(username, apiKey)
+               .endpoint(ENDPOINT)
                .buildApi(CinderApi.class);
        volumeApi = cinderApi.getVolumeApiForZone(ZONE);
        snapshotApi = cinderApi.getSnapshotApiForZone(ZONE);

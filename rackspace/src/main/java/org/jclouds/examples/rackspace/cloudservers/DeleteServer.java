@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -33,17 +33,18 @@ import static org.jclouds.compute.config.ComputeServiceProperties.POLL_INITIAL_P
 import static org.jclouds.compute.config.ComputeServiceProperties.POLL_MAX_PERIOD;
 import static org.jclouds.compute.predicates.NodePredicates.inGroup;
 import static org.jclouds.examples.rackspace.cloudservers.Constants.*;
+import static org.jclouds.examples.rackspace.Constants.*;
 
 /**
- * This example destroys the server created in the CreateServer example. 
- *  
+ * This example destroys the server created in the CreateServer example.
+ *
  */
 public class DeleteServer implements Closeable {
    private ComputeService computeService;
 
    /**
     * To get a username and API key see http://www.jclouds.org/documentation/quickstart/rackspace/
-    * 
+    *
     * The first argument (args[0]) must be your username
     * The second argument (args[1]) must be your API key
     */
@@ -69,6 +70,7 @@ public class DeleteServer implements Closeable {
 
       ComputeServiceContext context = ContextBuilder.newBuilder(PROVIDER)
             .credentials(username, apiKey)
+            .endpoint(ENDPOINT)
             .overrides(overrides)
             .buildView(ComputeServiceContext.class);
       computeService = context.getComputeService();

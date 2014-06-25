@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -31,6 +31,7 @@ import org.jclouds.openstack.trove.v1.features.UserApi;
 import com.google.common.io.Closeables;
 
 import static org.jclouds.examples.rackspace.clouddatabases.Constants.*;
+import static org.jclouds.examples.rackspace.Constants.*;
 
 /**
  * This example will create a User on the database created in the CreateDatabase example.
@@ -41,21 +42,21 @@ public class CreateUser implements Closeable {
    private final UserApi userApi;
 
    /**
-    * To get a username and API key see 
+    * To get a username and API key see
     * http://www.jclouds.org/documentation/quickstart/rackspace/
-    * 
+    *
     * The first argument  (args[0]) must be your username.
     * The second argument (args[1]) must be your API key.
     */
-   public static void main(String[] args) throws IOException {      
+   public static void main(String[] args) throws IOException {
       CreateUser createUser = new CreateUser(args[0], args[1]);
 
       try {
          createUser.createUser();
-      } 
+      }
       catch (Exception e) {
          e.printStackTrace();
-      } 
+      }
       finally {
          createUser.close();
       }
@@ -64,6 +65,7 @@ public class CreateUser implements Closeable {
    public CreateUser(String username, String apiKey) {
       troveApi = ContextBuilder.newBuilder(PROVIDER)
             .credentials(username, apiKey)
+            .endpoint(ENDPOINT)
             .buildApi(TroveApi.class);
 
       instanceApi = troveApi.getInstanceApiForZone(ZONE);
@@ -87,7 +89,7 @@ public class CreateUser implements Closeable {
       System.out.format("Create User%n");
 
       boolean result = userApi.create(NAME, PASSWORD, NAME);
-      
+
       System.out.format("  %s%n", result);
    }
 

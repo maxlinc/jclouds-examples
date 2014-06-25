@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -48,6 +48,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.jclouds.compute.config.ComputeServiceProperties.POLL_INITIAL_PERIOD;
 import static org.jclouds.compute.config.ComputeServiceProperties.POLL_MAX_PERIOD;
 import static org.jclouds.examples.rackspace.cloudservers.Constants.*;
+import static org.jclouds.examples.rackspace.Constants.*;
 import static org.jclouds.scriptbuilder.domain.Statements.exec;
 import static org.jclouds.util.Predicates2.retry;
 
@@ -61,8 +62,8 @@ public class CloudServersPublish implements Closeable {
    /**
     * To get a username and API key see
     * http://www.jclouds.org/documentation/quickstart/rackspace/
-    * 
-    * The first argument (args[0]) must be your username 
+    *
+    * The first argument (args[0]) must be your username
     * The second argument (args[1]) must be your API key
     * The optional third argument (args[2]) is the number of Cloud Servers to start
     */
@@ -73,11 +74,11 @@ public class CloudServersPublish implements Closeable {
    public static Set<? extends NodeMetadata> getPublishedCloudServers(List<String> args) throws IOException {
       CloudServersPublish cloudServersPublish = new CloudServersPublish(args);
       Set<? extends NodeMetadata> nodes = null;
-      
+
       try {
          nodes = cloudServersPublish.createServer();
          cloudServersPublish.configureAndStartWebserver(nodes);
-         
+
          return nodes;
       }
       catch (Exception e) {
@@ -86,7 +87,7 @@ public class CloudServersPublish implements Closeable {
       finally {
          cloudServersPublish.close();
       }
-      
+
       return nodes;
    }
 
@@ -104,6 +105,7 @@ public class CloudServersPublish implements Closeable {
 
       ComputeServiceContext context = ContextBuilder.newBuilder(PROVIDER)
             .credentials(username, apiKey)
+            .endpoint(ENDPOINT)
             .overrides(overrides)
             .modules(modules)
             .buildView(ComputeServiceContext.class);

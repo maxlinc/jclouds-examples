@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -23,6 +23,7 @@ import static org.jclouds.examples.rackspace.cloudblockstorage.Constants.PASSWOR
 import static org.jclouds.examples.rackspace.cloudblockstorage.Constants.PROVIDER;
 import static org.jclouds.examples.rackspace.cloudblockstorage.Constants.ROOT;
 import static org.jclouds.examples.rackspace.cloudblockstorage.Constants.ZONE;
+import static org.jclouds.examples.rackspace.Constants.ENDPOINT;
 import static org.jclouds.scriptbuilder.domain.Statements.exec;
 
 import java.io.Closeable;
@@ -70,7 +71,7 @@ public class DetachVolume implements Closeable {
    /**
     * To get a username and API key see
     * http://www.jclouds.org/documentation/quickstart/rackspace/
-    * 
+    *
     * The first argument (args[0]) must be your username
     * The second argument (args[1]) must be your API key
     */
@@ -99,6 +100,7 @@ public class DetachVolume implements Closeable {
 
       ComputeServiceContext context = ContextBuilder.newBuilder(provider)
             .credentials(username, apiKey)
+            .endpoint(ENDPOINT)
             .modules(modules)
             .buildView(ComputeServiceContext.class);
       computeService = context.getComputeService();
@@ -108,6 +110,7 @@ public class DetachVolume implements Closeable {
 
       cinderApi = ContextBuilder.newBuilder(PROVIDER)
             .credentials(username, apiKey)
+            .endpoint(ENDPOINT)
             .buildApi(CinderApi.class);
       volumeApi = cinderApi.getVolumeApiForZone(ZONE);
    }

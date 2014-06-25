@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -25,6 +25,7 @@ import static org.jclouds.examples.rackspace.cloudservers.Constants.NAME;
 import static org.jclouds.examples.rackspace.cloudservers.Constants.POLL_PERIOD_TWENTY_SECONDS;
 import static org.jclouds.examples.rackspace.cloudservers.Constants.PROVIDER;
 import static org.jclouds.examples.rackspace.cloudservers.Constants.ZONE;
+import static org.jclouds.examples.rackspace.Constants.ENDPOINT;
 import static org.jclouds.scriptbuilder.domain.Statements.exec;
 
 import java.io.Closeable;
@@ -110,6 +111,7 @@ public class CreateServerWithKeyPair implements Closeable {
 
       ComputeServiceContext context = ContextBuilder.newBuilder(PROVIDER)
             .credentials(username, apiKey)
+            .endpoint(ENDPOINT)
             .overrides(overrides)
             .modules(modules)
             .buildView(ComputeServiceContext.class);

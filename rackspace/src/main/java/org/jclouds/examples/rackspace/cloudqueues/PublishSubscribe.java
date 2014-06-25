@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -49,6 +49,7 @@ import static org.jclouds.examples.rackspace.cloudqueues.Constants.PUBLISHER_ID;
 import static org.jclouds.examples.rackspace.cloudqueues.Constants.PUBLISHER_NAME;
 import static org.jclouds.examples.rackspace.cloudqueues.Constants.SUBSCRIBER_ID;
 import static org.jclouds.examples.rackspace.cloudqueues.Constants.ZONE;
+import static org.jclouds.examples.rackspace.Constants.ENDPOINT;
 import static org.jclouds.openstack.marconi.v1.options.StreamMessagesOptions.Builder.limit;
 
 /**
@@ -95,6 +96,7 @@ public class PublishSubscribe implements Closeable {
 
       marconiApi = ContextBuilder.newBuilder(PROVIDER)
             .credentials(username, apiKey)
+            .endpoint(ENDPOINT)
             // .modules(modules)
             .buildApi(MarconiApi.class);
       queueApi = marconiApi.getQueueApiForZoneAndClient(ZONE, PUBLISHER_ID);

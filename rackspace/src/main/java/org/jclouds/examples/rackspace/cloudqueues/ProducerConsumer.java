@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -48,6 +48,7 @@ import static org.jclouds.examples.rackspace.cloudqueues.Constants.PRODUCER_ID;
 import static org.jclouds.examples.rackspace.cloudqueues.Constants.PRODUCER_NAME;
 import static org.jclouds.examples.rackspace.cloudqueues.Constants.PROVIDER;
 import static org.jclouds.examples.rackspace.cloudqueues.Constants.ZONE;
+import static org.jclouds.examples.rackspace.Constants.ENDPOINT;
 
 /**
  * Setting up a Producer/Consumer model in Cloud Queues consists of posting messages to your queue, consumers claiming
@@ -96,6 +97,7 @@ public class ProducerConsumer implements Closeable {
 
       marconiApi = ContextBuilder.newBuilder(PROVIDER)
             .credentials(username, apiKey)
+            .endpoint(ENDPOINT)
             // .modules(modules)
             .buildApi(MarconiApi.class);
       queueApi = marconiApi.getQueueApiForZoneAndClient(ZONE, PRODUCER_ID);

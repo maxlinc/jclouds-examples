@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -29,17 +29,18 @@ import java.io.IOException;
 
 import static org.jclouds.examples.rackspace.clouddns.Constants.NAME;
 import static org.jclouds.examples.rackspace.clouddns.Constants.PROVIDER;
+import static org.jclouds.examples.rackspace.Constants.ENDPOINT;
 
 /**
- * This example lists records. 
- *  
+ * This example lists records.
+ *
  */
 public class ListRecords implements Closeable {
    private final CloudDNSApi dnsApi;
 
    /**
     * To get a username and API key see http://www.jclouds.org/documentation/quickstart/rackspace/
-    * 
+    *
     * The first argument (args[0]) must be your username
     * The second argument (args[1]) must be your API key
     */
@@ -63,6 +64,7 @@ public class ListRecords implements Closeable {
    public ListRecords(String username, String apiKey) {
       dnsApi = ContextBuilder.newBuilder(PROVIDER)
             .credentials(username, apiKey)
+            .endpoint(ENDPOINT)
             .buildApi(CloudDNSApi.class);
    }
 
@@ -72,7 +74,7 @@ public class ListRecords implements Closeable {
             return domain;
          }
       }
-      
+
       throw new RuntimeException(NAME + " not found. Run CreateDomains example first.");
    }
 
@@ -80,7 +82,7 @@ public class ListRecords implements Closeable {
       System.out.format("List Records%n");
 
       Iterable<RecordDetail> recordDetails = dnsApi.getRecordApiForDomain(domain.getId()).list().concat();
-      
+
       for (RecordDetail recordDetail: recordDetails) {
          System.out.format("  %s%n", recordDetail);
       }
@@ -90,7 +92,7 @@ public class ListRecords implements Closeable {
       System.out.format("List Records by Name and Type%n");
 
       Iterable<RecordDetail> recordDetails = dnsApi.getRecordApiForDomain(domain.getId()).listByNameAndType(NAME, "A").concat();
-      
+
       for (RecordDetail recordDetail: recordDetails) {
          System.out.format("  %s%n", recordDetail);
       }
@@ -100,7 +102,7 @@ public class ListRecords implements Closeable {
       System.out.format("List Records by Type%n");
 
       Iterable<RecordDetail> recordDetails = dnsApi.getRecordApiForDomain(domain.getId()).listByType("MX").concat();
-      
+
       for (RecordDetail recordDetail: recordDetails) {
          System.out.format("  %s%n", recordDetail);
       }
@@ -108,8 +110,8 @@ public class ListRecords implements Closeable {
 
    /**
     * Always close your service when you're done with it.
-    * 
-    * Note that closing quietly like this is not necessary in Java 7. 
+    *
+    * Note that closing quietly like this is not necessary in Java 7.
     * You would use try-with-resources in the main method instead.
     */
    public void close() throws IOException {

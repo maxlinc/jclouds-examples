@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -52,13 +52,14 @@ import static com.google.common.collect.Iterables.getOnlyElement;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static org.jclouds.examples.rackspace.cloudfiles.Constants.PROVIDER;
 import static org.jclouds.examples.rackspace.cloudfiles.Constants.REGION;
+import static org.jclouds.examples.rackspace.Constants.ENDPOINT;
 import static org.jclouds.openstack.swift.v1.reference.SwiftHeaders.STATIC_WEB_ERROR;
 import static org.jclouds.openstack.swift.v1.reference.SwiftHeaders.STATIC_WEB_INDEX;
 
 /**
  * Upload an entire directory and all of its sub-directories to a Cloud Files container. The local directory hierarchy
  * will be mimicked as pseudo-hierarchical directories (http://j.mp/rax-hier) within the container. This is a great
- * way to upload content for a static website (http://j.mp/rax-static).     
+ * way to upload content for a static website (http://j.mp/rax-static).
  */
 public class UploadDirectoryToCDN implements Closeable {
    private static final int THREADS = Integer.getInteger("upload.threadpool.size", 10);
@@ -92,6 +93,7 @@ public class UploadDirectoryToCDN implements Closeable {
    public UploadDirectoryToCDN(String username, String apiKey) {
       RegionScopedBlobStoreContext context = ContextBuilder.newBuilder(PROVIDER)
             .credentials(username, apiKey)
+            .endpoint(ENDPOINT)
             .buildView(RegionScopedBlobStoreContext.class);
       blobStore = context.blobStoreInRegion(REGION);
       cloudFiles = blobStore.getContext().unwrapApi(CloudFilesApi.class);
@@ -137,13 +139,13 @@ public class UploadDirectoryToCDN implements Closeable {
    private void uploadFiles(String container, List<BlobDetail> blobDetails)
          throws InterruptedException, ExecutionException {
       ListeningExecutorService executor = MoreExecutors.listeningDecorator(newFixedThreadPool(THREADS));
-      List<ListenableFuture<BlobDetail>> blobUploaderFutures = Lists.newArrayList();      
+      List<ListenableFuture<BlobDetail>> blobUploaderFutures = Lists.newArrayList();
       BlobUploaderCallback blobUploaderCallback = new BlobUploaderCallback();
 
       try {
 
          for (BlobDetail blobDetail: blobDetails) {
-            BlobUploader blobUploader = new BlobUploader(container, blobDetail);         
+            BlobUploader blobUploader = new BlobUploader(container, blobDetail);
             ListenableFuture<BlobDetail> blobDetailFuture = executor.submit(blobUploader);
             blobUploaderFutures.add(blobDetailFuture);
 
@@ -228,7 +230,7 @@ public class UploadDirectoryToCDN implements Closeable {
     * the user of upload progress.
     */
    private class BlobUploaderCallback implements FutureCallback<BlobDetail> {
-      
+
       public void onSuccess(BlobDetail result) {
          System.out.format(".");
       }
@@ -239,7 +241,7 @@ public class UploadDirectoryToCDN implements Closeable {
    }
 
    /**
-    * An immutable class for holding details about an object. When an object has been successfully uploaded the 
+    * An immutable class for holding details about an object. When an object has been successfully uploaded the
     * eTag will be present.
     */
    public static class BlobDetail {

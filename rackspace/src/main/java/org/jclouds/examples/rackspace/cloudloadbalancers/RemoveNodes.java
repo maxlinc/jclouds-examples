@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -36,10 +36,11 @@ import java.util.Set;
 import java.util.concurrent.TimeoutException;
 
 import static org.jclouds.examples.rackspace.cloudloadbalancers.Constants.*;
+import static org.jclouds.examples.rackspace.Constants.ENDPOINT;
 
 /**
- * This example removes a Node from a Load Balancer. 
- *  
+ * This example removes a Node from a Load Balancer.
+ *
  */
 public class RemoveNodes implements Closeable {
    private final CloudLoadBalancersApi clbApi;
@@ -47,7 +48,7 @@ public class RemoveNodes implements Closeable {
 
    /**
     * To get a username and API key see http://www.jclouds.org/documentation/quickstart/rackspace/
-    * 
+    *
     * The first argument (args[0]) must be your username
     * The second argument (args[1]) must be your API key
     */
@@ -70,6 +71,7 @@ public class RemoveNodes implements Closeable {
    public RemoveNodes(String username, String apiKey) {
       clbApi = ContextBuilder.newBuilder(PROVIDER)
             .credentials(username, apiKey)
+            .endpoint(ENDPOINT)
             .buildApi(CloudLoadBalancersApi.class);
       lbApi = clbApi.getLoadBalancerApiForZone(ZONE);
    }
@@ -80,20 +82,20 @@ public class RemoveNodes implements Closeable {
             return loadBalancer;
          }
       }
-      
+
       throw new RuntimeException(NAME + " not found. Run a CreateLoadBalancer* example first.");
    }
-   
+
    private Set<Node> getNodes(LoadBalancer loadBalancer) {
       NodeApi nodeApi = clbApi.getNodeApiForZoneAndLoadBalancer(ZONE, loadBalancer.getId());
       Set<Node> nodes = Sets.newHashSet();
-      
+
       for (Node node: nodeApi.list().concat()) {
          if (node.getAddress().startsWith("10.180.1")) {
             nodes.add(node);
          }
       }
-      
+
       return nodes;
    }
 
@@ -102,19 +104,19 @@ public class RemoveNodes implements Closeable {
 
       NodeApi nodeApi = clbApi.getNodeApiForZoneAndLoadBalancer(ZONE, loadBalancer.getId());
       Iterable<Integer> nodeIds = Iterables.transform(nodes, new NodeToId());
-      
+
       nodeApi.remove(nodeIds);
 
       // Wait for the Load Balancer to become Active before moving on
       // If you want to know what's happening during the polling, enable logging. See
       // /jclouds-example/rackspace/src/main/java/org/jclouds/examples/rackspace/Logging.java
       if (!LoadBalancerPredicates.awaitAvailable(lbApi).apply(loadBalancer)) {
-         throw new TimeoutException("Timeout on loadBalancer: " + loadBalancer);     
+         throw new TimeoutException("Timeout on loadBalancer: " + loadBalancer);
       }
-      
+
       System.out.format("  %s%n", nodeIds);
    }
-   
+
    private static class NodeToId implements Function<Node, Integer> {
       @Override
       public Integer apply(Node node) {
@@ -124,8 +126,8 @@ public class RemoveNodes implements Closeable {
 
    /**
     * Always close your service when you're done with it.
-    * 
-    * Note that closing quietly like this is not necessary in Java 7. 
+    *
+    * Note that closing quietly like this is not necessary in Java 7.
     * You would use try-with-resources in the main method instead.
     */
    public void close() throws IOException {

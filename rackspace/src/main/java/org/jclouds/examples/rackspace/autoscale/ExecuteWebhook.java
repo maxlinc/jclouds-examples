@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -20,6 +20,7 @@ package org.jclouds.examples.rackspace.autoscale;
 
 import static org.jclouds.examples.rackspace.autoscale.Constants.PROVIDER;
 import static org.jclouds.examples.rackspace.autoscale.Constants.ZONE;
+import static org.jclouds.examples.rackspace.Constants.ENDPOINT;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -37,7 +38,7 @@ import com.google.common.io.Closeables;
 import com.google.common.util.concurrent.Uninterruptibles;
 
 /**
- * This example executes a scaling policy in two ways: 
+ * This example executes a scaling policy in two ways:
  * - Authenticated API call using jclouds.
  * - Anonymously using just the webhook URL.
  */
@@ -71,6 +72,7 @@ public class ExecuteWebhook implements Closeable {
    public ExecuteWebhook(String username, String apiKey) {
       autoscaleApi = ContextBuilder.newBuilder(PROVIDER)
             .credentials(username, apiKey)
+            .endpoint(ENDPOINT)
             .buildApi(AutoscaleApi.class);
 
       groupApi = autoscaleApi.getGroupApiForZone(ZONE);
