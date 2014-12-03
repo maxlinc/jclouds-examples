@@ -19,14 +19,9 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.apache.jclouds</groupId>
-    <artifactId>jclouds-project</artifactId>
-    <version>1.7.3-SNAPSHOT</version>
-  </parent>
   <groupId>org.apache.jclouds.examples</groupId>
   <artifactId>jclouds-examples</artifactId>
-  <version>1.7.3-SNAPSHOT</version>
+  <version>1.8.0</version>
   <packaging>pom</packaging>
   <name>jclouds examples</name>
 
@@ -38,7 +33,7 @@
   </scm>
 
   <properties>
-    <jclouds.version>1.7.2</jclouds.version>
+    <jclouds.version>1.8.0</jclouds.version>
   </properties>
 
   <repositories>
@@ -69,6 +64,9 @@
     <module>blobstore-largeblob</module>
     <module>chef-basics</module>
     <module>compute-basics</module>
+    <module>google</module>
+    <module>glacier</module>
+    <module>openstack</module>
     <module>rackspace</module>
 <!--
     TODO: These modules have bit-rotted:
@@ -118,28 +116,6 @@
             <exclude>.repository/**</exclude>
             <exclude>**/jquery-1.7.1.min.js</exclude>
             <!-- binary -->
-          </excludes>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.mycila.maven-license-plugin</groupId>
-        <artifactId>maven-license-plugin</artifactId>
-        <version>1.9.0</version>
-        <configuration>
-          <strictCheck>true</strictCheck>
-          <encoding>${sourceEncoding}</encoding>
-          <aggregate>true</aggregate>
-          <header>project/src/etc/header.txt</header>
-          <mapping>
-            <clj>SEMICOLON_STYLE</clj>
-          </mapping>
-          <excludes>
-            <exclude>**/src/**/resources/**</exclude>
-            <exclude>**/LICENSE.txt</exclude>
-            <exclude>**/NOTICE.txt</exclude>
-            <exclude>**/README.md</exclude>
-            <exclude>**/README.txt</exclude>
-            <exclude>**/header.txt</exclude>
           </excludes>
         </configuration>
       </plugin>

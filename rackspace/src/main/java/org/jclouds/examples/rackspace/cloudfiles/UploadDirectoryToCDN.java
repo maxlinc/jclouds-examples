@@ -19,7 +19,6 @@
 package org.jclouds.examples.rackspace.cloudfiles;
 
 import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.io.ByteSource;
@@ -95,7 +94,7 @@ public class UploadDirectoryToCDN implements Closeable {
             .credentials(username, apiKey)
             .endpoint(ENDPOINT)
             .buildView(RegionScopedBlobStoreContext.class);
-      blobStore = context.blobStoreInRegion(REGION);
+      blobStore = context.getBlobStore(REGION);
       cloudFiles = blobStore.getContext().unwrapApi(CloudFilesApi.class);
    }
 

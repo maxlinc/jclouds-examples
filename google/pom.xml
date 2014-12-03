@@ -20,15 +20,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <version>1.7.3-SNAPSHOT</version>
+  <groupId>org.apache.jclouds.examples</groupId>
+  <artifactId>google-examples</artifactId>
+  <version>1.8.0</version>
   <name>google-examples</name>
 
   <properties>
-    <jclouds.version>1.7.2</jclouds.version>
+    <jclouds.version>1.8.0</jclouds.version>
   </properties>
 
-  <groupId>org.apache.jclouds.examples</groupId>
-  <artifactId>google-examples</artifactId>
   <dependencies>
     <dependency>
       <groupId>org.apache.jclouds.driver</groupId>
@@ -51,4 +51,18 @@
       <version>${jclouds.version}</version>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <encoding>${project.build.sourceEncoding}</encoding>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>  
 </project>

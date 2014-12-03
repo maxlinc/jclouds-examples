@@ -18,13 +18,20 @@
  */
 package org.jclouds.examples.rackspace.cloudfiles;
 
-import com.google.common.io.ByteSource;
-import com.google.common.io.Closeables;
-import com.google.common.io.Files;
+import static org.jclouds.examples.rackspace.cloudfiles.Constants.CONTAINER;
+import static org.jclouds.examples.rackspace.cloudfiles.Constants.PROVIDER;
+import static org.jclouds.examples.rackspace.cloudfiles.Constants.REGION;
+
+import java.io.Closeable;
+import java.io.File;
+import java.io.IOException;
+
 import org.jclouds.ContextBuilder;
 import org.jclouds.blobstore.BlobStore;
-import org.jclouds.blobstore.BlobStoreContext;
 import org.jclouds.blobstore.domain.Blob;
+import org.jclouds.domain.Location;
+import org.jclouds.domain.LocationBuilder;
+import org.jclouds.domain.LocationScope;
 import org.jclouds.http.HttpRequest;
 import org.jclouds.http.HttpResponse;
 import org.jclouds.http.HttpResponseException;
@@ -32,14 +39,9 @@ import org.jclouds.io.Payload;
 import org.jclouds.io.Payloads;
 import org.jclouds.openstack.swift.v1.blobstore.RegionScopedBlobStoreContext;
 
-import java.io.Closeable;
-import java.io.File;
-import java.io.IOException;
-
-import static org.jclouds.examples.rackspace.cloudfiles.Constants.CONTAINER;
-import static org.jclouds.examples.rackspace.cloudfiles.Constants.PROVIDER;
-import static org.jclouds.examples.rackspace.cloudfiles.Constants.REGION;
-import static org.jclouds.examples.rackspace.Constants.ENDPOINT;
+import com.google.common.io.ByteSource;
+import com.google.common.io.Closeables;
+import com.google.common.io.Files;
 
 /**
  * The Temporary URL feature (TempURL) allows you to create limited-time Internet addresses which allow you to grant
@@ -74,6 +76,7 @@ public class GenerateTempURL implements Closeable {
       GenerateTempURL generateTempURL = new GenerateTempURL(args[0], args[1]);
 
       try {
+         generateTempURL.createContainer();
          generateTempURL.generatePutTempURL();
          generateTempURL.generateGetTempURL();
          generateTempURL.generateDeleteTempURL();
@@ -89,9 +92,17 @@ public class GenerateTempURL implements Closeable {
    public GenerateTempURL(String username, String apiKey) {
       blobStoreContext = ContextBuilder.newBuilder(PROVIDER)
             .credentials(username, apiKey)
-            .endpoint(ENDPOINT)
             .buildView(RegionScopedBlobStoreContext.class);
-      blobStore = blobStoreContext.blobStoreInRegion(REGION);
+      blobStore = blobStoreContext.getBlobStore(REGION);
+   }
+
+   private void createContainer() throws IOException {
+      // Ensure that the container exists
+      Location location = new LocationBuilder().scope(LocationScope.REGION).id(REGION).description("region").build();
+      if (!blobStore.containerExists(CONTAINER)) {
+            blobStore.createContainerInLocation(location, CONTAINER);
+         System.out.format("Created container in %s%n", REGION);
+      }
    }
 
    private void generatePutTempURL() throws IOException {
@@ -104,7 +115,7 @@ public class GenerateTempURL implements Closeable {
 
       // Create the Blob
       Blob blob = blobStore.blobBuilder(FILENAME).payload(payload).contentType("text/plain").build();
-      HttpRequest request = blobStoreContext.getSigner().signPutBlob(CONTAINER, blob, TEN_MINUTES);
+      HttpRequest request = blobStoreContext.getSigner(REGION).signPutBlob(CONTAINER, blob, TEN_MINUTES);
 
       System.out.format("  %s %s%n", request.getMethod(), request.getEndpoint());
 
@@ -123,7 +134,7 @@ public class GenerateTempURL implements Closeable {
    private void generateGetTempURL() throws IOException {
       System.out.format("Generate GET Temp URL%n");
 
-      HttpRequest request = blobStoreContext.getSigner().signGetBlob(CONTAINER, FILENAME, TEN_MINUTES);
+      HttpRequest request = blobStoreContext.getSigner(REGION).signGetBlob(CONTAINER, FILENAME, TEN_MINUTES);
 
       System.out.format("  %s %s%n", request.getMethod(), request.getEndpoint());
 
@@ -144,7 +155,7 @@ public class GenerateTempURL implements Closeable {
    private void generateDeleteTempURL() throws IOException {
       System.out.format("Generate DELETE Temp URL%n");
 
-      HttpRequest request = blobStoreContext.getSigner().signRemoveBlob(CONTAINER, FILENAME);
+      HttpRequest request = blobStoreContext.getSigner(REGION).signRemoveBlob(CONTAINER, FILENAME);
 
       System.out.format("  %s %s%n", request.getMethod(), request.getEndpoint());
 
@@ -153,7 +164,7 @@ public class GenerateTempURL implements Closeable {
       int statusCode = response.getStatusCode();
 
       if (statusCode >= 200 && statusCode < 299) {
-         System.out.format("  DELETE Success (%s)", statusCode);
+         System.out.format("  DELETE Success (%s)%n", statusCode);
       }
       else {
          throw new HttpResponseException(null, response);

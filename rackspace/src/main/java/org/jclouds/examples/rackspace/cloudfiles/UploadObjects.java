@@ -21,7 +21,6 @@ package org.jclouds.examples.rackspace.cloudfiles;
 import static org.jclouds.examples.rackspace.cloudfiles.Constants.CONTAINER;
 import static org.jclouds.examples.rackspace.cloudfiles.Constants.PROVIDER;
 import static org.jclouds.examples.rackspace.cloudfiles.Constants.REGION;
-import static org.jclouds.examples.rackspace.Constants.ENDPOINT;
 
 import java.io.Closeable;
 import java.io.File;
@@ -74,9 +73,8 @@ public class UploadObjects implements Closeable {
 
    public UploadObjects(String username, String apiKey) {
       ContextBuilder builder = ContextBuilder.newBuilder(PROVIDER)
-                                  .credentials(username, apiKey)
-                                  .endpoint(ENDPOINT);
-      blobStore = builder.buildView(RegionScopedBlobStoreContext.class).blobStoreInRegion(REGION);
+                                  .credentials(username, apiKey);
+      blobStore = builder.buildView(RegionScopedBlobStoreContext.class).getBlobStore(REGION);
       cloudFiles = blobStore.getContext().unwrapApi(CloudFilesApi.class);
    }
 

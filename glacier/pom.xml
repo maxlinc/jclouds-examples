@@ -21,36 +21,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apache.jclouds.examples</groupId>
-  <artifactId>blobstore-basics</artifactId>
+  <artifactId>glacier-examples</artifactId>
   <version>1.8.0</version>
-  <name>blobstore-basics</name>
-  <description>jclouds blobstore example that creates a container, then displays the size of each container</description>
-
-  <properties>
-    <jclouds.version>1.8.0</jclouds.version>
-  </properties>
+  <name>glacier-examples</name>
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.jclouds</groupId>
-      <artifactId>jclouds-blobstore</artifactId>
-      <version>${jclouds.version}</version>
+      <groupId>org.apache.jclouds.labs</groupId>
+      <artifactId>glacier</artifactId>
+      <version>${project.version}</version>
     </dependency>
-    <dependency>
-      <groupId>org.apache.jclouds</groupId>
-      <artifactId>jclouds-allblobstore</artifactId>
-      <version>${jclouds.version}</version>
-    </dependency>
-    <!-- note that if you want a smaller distribution
-         remove the above dependency and place something 
-         like below -->
-    <!--
-        <dependency>
-        <groupId>org.apache.jclouds.provider</groupId>
-        <artifactId>hpcloud-objectstorage</artifactId>
-        <version>${jclouds.version}</version>
-        </dependency>
-    -->
   </dependencies>
   <build>
     <finalName>${project.artifactId}</finalName>
@@ -71,7 +51,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>org.jclouds.examples.blobstore.basics.MainApp</mainClass>
+              <mainClass>org.jclouds.examples.glacier.MainApp</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -85,7 +65,7 @@
           </descriptors>
           <archive>
             <manifest>
-              <mainClass>org.jclouds.examples.blobstore.basics.MainApp</mainClass>
+              <mainClass>org.jclouds.examples.glacier.MainApp</mainClass>
             </manifest>
           </archive>
         </configuration>

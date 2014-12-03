@@ -21,23 +21,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apache.jclouds.examples</groupId>
-  <artifactId>rackspace-examples</artifactId>
+  <artifactId>openstack-examples</artifactId>
   <version>1.8.0</version>
-  <name>rackspace-examples</name>
+  <name>openstack-examples</name>
 
   <properties>
     <jclouds.version>1.8.0</jclouds.version>
   </properties>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>1.2.1</version>
-      </plugin>
-    </plugins>
-  </build>
 
   <dependencies>
     <!-- jclouds dependencies -->
@@ -51,81 +41,45 @@
       <artifactId>jclouds-sshj</artifactId>
       <version>${jclouds.version}</version>
     </dependency>
-    <!-- Rackspace US dependencies -->
+    <!-- jclouds OpenStack dependencies -->
     <dependency>
-      <groupId>org.apache.jclouds.provider</groupId>
-      <artifactId>rackspace-cloudservers-us</artifactId>
+      <groupId>org.apache.jclouds.api</groupId>
+      <artifactId>openstack-keystone</artifactId>
+      <version>${jclouds.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.jclouds.api</groupId>
+      <artifactId>openstack-nova</artifactId>
       <version>${jclouds.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.jclouds.labs</groupId>
-      <artifactId>rackspace-cloudfiles-us</artifactId>
+      <artifactId>openstack-swift</artifactId>
       <version>${jclouds.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.jclouds.provider</groupId>
-      <artifactId>rackspace-cloudblockstorage-us</artifactId>
+      <groupId>org.apache.jclouds.api</groupId>
+      <artifactId>openstack-cinder</artifactId>
       <version>${jclouds.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.jclouds.provider</groupId>
-      <artifactId>rackspace-clouddatabases-us</artifactId>
-      <version>${jclouds.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.jclouds.labs</groupId>
-      <artifactId>rackspace-cloudqueues-us</artifactId>
-      <version>${jclouds.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.jclouds.provider</groupId>
-      <artifactId>rackspace-cloudloadbalancers-us</artifactId>
-      <version>${jclouds.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.jclouds.provider</groupId>
-      <artifactId>rackspace-clouddns-us</artifactId>
-      <version>${jclouds.version}</version>
-    </dependency>
-    <!-- Rackspace UK dependencies -->
-    <dependency>
-      <groupId>org.apache.jclouds.provider</groupId>
-      <artifactId>rackspace-cloudservers-uk</artifactId>
+      <groupId>org.apache.jclouds.api</groupId>
+      <artifactId>openstack-trove</artifactId>
       <version>${jclouds.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.jclouds.labs</groupId>
-      <artifactId>rackspace-cloudfiles-uk</artifactId>
-      <version>${jclouds.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.jclouds.provider</groupId>
-      <artifactId>rackspace-cloudblockstorage-uk</artifactId>
-      <version>${jclouds.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.jclouds.provider</groupId>
-      <artifactId>rackspace-clouddatabases-uk</artifactId>
+      <artifactId>openstack-glance</artifactId>
       <version>${jclouds.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.jclouds.labs</groupId>
-      <artifactId>rackspace-cloudqueues-uk</artifactId>
+      <artifactId>openstack-marconi</artifactId>
       <version>${jclouds.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.jclouds.labs</groupId>
-      <artifactId>rackspace-autoscale-us</artifactId>
-      <version>${jclouds.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.jclouds.provider</groupId>
-      <artifactId>rackspace-cloudloadbalancers-uk</artifactId>
-      <version>${jclouds.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.jclouds.provider</groupId>
-      <artifactId>rackspace-clouddns-uk</artifactId>
+      <artifactId>openstack-neutron</artifactId>
       <version>${jclouds.version}</version>
     </dependency>
     <!-- 3rd party dependencies -->
