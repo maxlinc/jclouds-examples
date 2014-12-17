@@ -1,0 +1,20 @@
+---
+options:
+  # parameter_mode: tokens
+samples:
+  # This is CDB create user, we need Identity...
+  # add user: src/main/java/org/jclouds/examples/rackspace/clouddatabases/CreateUser.java
+  authenticate token:  src/main/java/org/jclouds/examples/rackspace/Authentication.java
+  # It creates a server as well... but good enough
+  create keypair: src/main/java/org/jclouds/examples/rackspace/cloudservers/CreateServerWithKeyPair.java
+  attach volume: src/main/java/org/jclouds/examples/rackspace/cloudblockstorage/CreateVolumeAndAttach.java
+  upload file: src/main/java/org/jclouds/examples/rackspace/cloudfiles/UploadObjects.java
+  get file: src/main/java/org/jclouds/examples/rackspace/cloudfiles/GetObject.java
+  delete container: src/main/java/org/jclouds/examples/rackspace/cloudfiles/DeleteObjectsAndContainer.java
+  create queue: src/main/java/org/jclouds/examples/rackspace/cloudqueues/StreamMessages.java
+  add message: src/main/java/org/jclouds/examples/rackspace/cloudqueues/PublishSubscribe.java
+  claim message: src/main/java/org/jclouds/examples/rackspace/cloudqueues/ProducerConsumer.java
+  delete queue: src/main/java/org/jclouds/examples/rackspace/cloudqueues/ProducerConsumer.java
+  secure load balancer: src/main/java/org/jclouds/examples/rackspace/cloudloadbalancers/UpdateLoadBalancers.java
+  throttle connections: src/main/java/org/jclouds/examples/rackspace/cloudloadbalancers/UpdateLoadBalancers.java
+  setup ssl: src/main/java/org/jclouds/examples/rackspace/cloudloadbalancers/UpdateLoadBalancers.java
