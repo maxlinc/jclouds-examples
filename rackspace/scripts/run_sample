@@ -2,7 +2,7 @@
 CHALLENGE_FILE=$1
 
 CHALLENGE=`basename $CHALLENGE_FILE .java`
-CLASS=`echo $CHALLENGE_FILE | sed 's#./src/main/java/##'`
+CLASS=`echo $CHALLENGE_FILE | sed 's#src/main/java/##'`
 CLASS=`echo $CLASS | sed 's#/#.#g'`
 CLASS=`basename $CLASS .java`
 
