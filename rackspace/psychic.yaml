@@ -1,7 +1,7 @@
 ---
 options:
   # parameter_mode: tokens
-samples:
+scripts:
   # This is CDB create user, we need Identity...
   # add user: src/main/java/org/jclouds/examples/rackspace/clouddatabases/CreateUser.java
   authenticate token:  src/main/java/org/jclouds/examples/rackspace/Authentication.java
